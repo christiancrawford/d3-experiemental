@@ -1,21 +1,16 @@
 <template>
   <div id="app">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <PackChart :tweetData="loadData" />
+    <DataVisualization :dataVisualizationData="loadData" />
   </div>
 </template>
 
 <script>
-import * as d3 from "d3";
-
-// import HelloWorld from "./components/HelloWorld.vue";
-import PackChart from "./components/Chart.vue";
+import DataVisualization from "./components/Chart.vue";
 
 export default {
   name: "app",
   components: {
-    // HelloWorld,
-    PackChart
+    DataVisualization
   },
   data: function() {
     return {
@@ -28,7 +23,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      let data = await d3.json("./tweets.json");
+      let data = await [4, 8, 15, 16, 23, 42];
       this.loadData = data;
     }
   }
