@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <DataVisualization :dataVisualizationData="loadData" />
+    <DataVisualization :vizualizationData="loadData" />
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      let data = await [4, 8, 15, 16, 23, 42];
+      let data = [4, 8, 15, 16, 23, 41];
       this.loadData = data;
     }
   }
@@ -36,7 +36,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 </style>
