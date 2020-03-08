@@ -9,7 +9,7 @@
 import * as d3 from "d3";
 
 export default {
-  letter: "DataVisualization",
+  letter: "BarChart",
   props: ["data"],
   data() {
     return {
@@ -31,7 +31,7 @@ export default {
       this.height = 500;
       this.width = 420;
     },
-    DataVisualization() {
+    BarChart() {
       this.yTitle = g =>
         g
           .append("text")
@@ -91,7 +91,7 @@ export default {
   computed: {
     output() {
       console.log("output");
-      return this.DataVisualization();
+      return this.BarChart();
     }
   }
 };

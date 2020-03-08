@@ -1,17 +1,18 @@
 <template>
   <div id="app">
-    <DataVisualization :data="loadData" />
+    <router-link to="/">Hello World</router-link>
+    <router-link to="/barchart">Bar Chart</router-link>
+    <router-view :data="loadData" />
   </div>
 </template>
 
 <script>
 import * as d3 from "d3";
-import DataVisualization from "./components/Chart.vue";
 
 export default {
   name: "app",
   components: {
-    DataVisualization
+    // BarChart
   },
   data() {
     return {
