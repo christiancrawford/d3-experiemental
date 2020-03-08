@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Data Visualization using D3</h1>
-    <svg :style="{ width: width }" v-html="output" />
+    <svg :style="{ width: width, height: height }" v-html="output" />
   </div>
 </template>
 
@@ -9,53 +9,81 @@
 import * as d3 from "d3";
 
 export default {
-  name: "DataVisualization",
+  letter: "DataVisualization",
   props: ["data"],
   data() {
-    return { width: 0, x: Number, y: Number };
+    return {
+      height: 0,
+      width: 0,
+      x: Number,
+      y: Number,
+      margin: {},
+      yTitle: "",
+      yAxis: Number,
+      xAxis: Number
+    };
   },
   beforeUpdate() {
     this.calcWidth();
   },
   methods: {
     calcWidth() {
+      this.height = 500;
       this.width = 420;
     },
     DataVisualization() {
-      this.x = d3
-        .scaleLinear()
-        .domain([0, d3.max(this.data, d => d.value)])
-        .range([0, this.width]);
+      this.yTitle = g =>
+        g
+          .append("text")
+          .attr("font-family", "sans-serif")
+          .attr("font-size", 10)
+          .attr("y", 10)
+          .text("↑ Frequency");
+
+      this.yAxis = g =>
+        g
+          .attr("transform", `translate(${this.margin.left},0)`)
+          .call(d3.axisLeft(this.y).ticks(null, "%"))
+          .call(g => g.select(".domain").remove());
+
+      this.xAxis = g =>
+        g
+          .attr("transform", `translate(0,${this.height - this.margin.bottom})`)
+          .call(d3.axisBottom(this.x).tickSizeOuter(0));
+
+      this.margin = { top: 20, right: 0, bottom: 30, left: 40 };
 
       this.y = d3
+        .scaleLinear()
+        .domain([0, d3.max(this.data, d => d.frequency)])
+        .range([this.height - this.margin.bottom, this.margin.top]);
+
+      this.x = d3
         .scaleBand()
-        .domain(this.data.map(d => d.name))
-        .range([0, 20 * this.data.length]);
+        .domain(this.data.map(d => d.letter))
+        .rangeRound([this.margin.left, this.width - this.margin.right])
+        .padding(0.1);
 
       const svg = d3
         .create("svg")
-        .attr("width", this.width)
-        .attr("height", this.y.range()[1]);
+        .attr("viewBox", [0, 0, this.width, this.height]);
 
-      const bar = svg
-        .selectAll("g")
-        .data(this.data)
-        .join("g")
-        .attr("transform", d => `translate(0,${this.y(d.name)})`);
-
-      bar
-        .append("rect")
+      svg
+        .append("g")
         .attr("fill", "steelblue")
-        .attr("width", d => this.x(d.value))
-        .attr("height", this.y.bandwidth() - 1);
+        .selectAll("rect")
+        .data(this.data)
+        .join("rect")
+        .attr("x", d => this.x(d.letter))
+        .attr("y", d => this.y(d.frequency))
+        .attr("height", d => this.y(0) - this.y(d.frequency))
+        .attr("width", this.x.bandwidth());
 
-      bar
-        .append("text")
-        .attr("fill", "white")
-        .attr("x", d => this.x(d.value) - 3)
-        .attr("y", this.y.bandwidth() / 2)
-        .attr("dy", "0.35em")
-        .text(d => d.value);
+      svg.append("g").call(this.xAxis);
+
+      svg.append("g").call(this.yAxis);
+
+      svg.call(this.yTitle);
 
       return svg.node().innerHTML;
     }

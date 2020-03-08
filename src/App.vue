@@ -26,7 +26,7 @@ export default {
   methods: {
     async fetchData() {
       let fileData;
-      await d3.csv("./numbers.csv", d3.autoType).then(data => {
+      await d3.csv("./alphabet.csv", d3.autoType).then(data => {
         fileData = data;
       });
       this.loadData = fileData;
