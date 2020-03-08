@@ -24,7 +24,7 @@ export default {
     DataVisualization() {
       this.x = d3
         .scaleLinear()
-        .domain([0, d3.max(this.data, d => Number(d.value))])
+        .domain([0, d3.max(this.data, d => d.value)])
         .range([0, this.width]);
 
       this.y = d3
@@ -46,16 +46,16 @@ export default {
       bar
         .append("rect")
         .attr("fill", "steelblue")
-        .attr("width", d => this.x(Number(d.value)))
+        .attr("width", d => this.x(d.value))
         .attr("height", this.y.bandwidth() - 1);
 
       bar
         .append("text")
         .attr("fill", "white")
-        .attr("x", d => this.x(Number(d.value)) - 3)
+        .attr("x", d => this.x(d.value) - 3)
         .attr("y", this.y.bandwidth() / 2)
         .attr("dy", "0.35em")
-        .text(d => Number(d.value));
+        .text(d => d.value);
 
       return svg.node().innerHTML;
     }
@@ -63,7 +63,6 @@ export default {
   computed: {
     output() {
       console.log("output");
-      // console.log("this.data", typeof(this.data[0].value));
       return this.DataVisualization();
     }
   }

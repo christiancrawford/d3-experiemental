@@ -26,8 +26,7 @@ export default {
   methods: {
     async fetchData() {
       let fileData;
-      await d3.csv("./numbers.csv").then(data => {
-        // How do I convert all 'value' values to Numbers on import?
+      await d3.csv("./numbers.csv", d3.autoType).then(data => {
         fileData = data;
       });
       this.loadData = fileData;
