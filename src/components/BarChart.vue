@@ -13,8 +13,8 @@ export default {
   props: ["data"],
   data() {
     return {
-      height: 0,
-      width: 0,
+      height: 500,
+      width: 420,
       x: Number,
       y: Number,
       margin: {},
@@ -23,14 +23,7 @@ export default {
       xAxis: Number
     };
   },
-  beforeUpdate() {
-    this.calcWidth();
-  },
   methods: {
-    calcWidth() {
-      this.height = 500;
-      this.width = 420;
-    },
     BarChart() {
       this.yTitle = g =>
         g
@@ -90,7 +83,6 @@ export default {
   },
   computed: {
     output() {
-      console.log("output");
       return this.BarChart();
     }
   }

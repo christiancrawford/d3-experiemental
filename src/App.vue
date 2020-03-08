@@ -11,13 +11,10 @@ import * as d3 from "d3";
 
 export default {
   name: "app",
-  components: {
-    // BarChart
-  },
+  components: {},
   data() {
     return {
-      loadData: [],
-      mydata: {}
+      loadData: []
     };
   },
   mounted() {
