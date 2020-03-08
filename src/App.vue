@@ -1,12 +1,8 @@
 <template>
   <div id="app">
-    <b-menu>
-      <b-menu-list label="Menu">
-        <router-link to="/" label>Hello World</router-link>
-        <router-link to="/barchart">Bar Chart</router-link>
-        <router-view :data="loadData" />
-      </b-menu-list>
-    </b-menu>
+    <router-link to="/">Hello World</router-link>
+    <router-link to="/barchart">Bar Chart</router-link>
+    <router-view :data="loadData" />
   </div>
 </template>
 
@@ -39,6 +35,10 @@ export default {
 
 <style>
 #app {
- 
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  margin-top: 60px;
 }
 </style>
