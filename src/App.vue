@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <DataVisualization :vizualizationData="loadData" />
+    <DataVisualization :data="loadData" />
   </div>
 </template>
 
 <script>
+import * as d3 from "d3";
 import DataVisualization from "./components/Chart.vue";
 
 export default {
@@ -12,9 +13,10 @@ export default {
   components: {
     DataVisualization
   },
-  data: function() {
+  data() {
     return {
-      loadData: []
+      loadData: [],
+      mydata: {}
     };
   },
   mounted() {
@@ -23,8 +25,12 @@ export default {
   },
   methods: {
     async fetchData() {
-      let data = [4, 8, 15, 16, 23, 41];
-      this.loadData = data;
+      let fileData;
+      await d3.csv("./numbers.csv").then(data => {
+        // How do I convert all 'value' values to Numbers on import?
+        fileData = data;
+      });
+      this.loadData = fileData;
     }
   }
 };

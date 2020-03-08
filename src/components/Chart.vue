@@ -10,7 +10,7 @@ import * as d3 from "d3";
 
 export default {
   name: "DataVisualization",
-  props: ["vizualizationData"],
+  props: ["data"],
   data() {
     return { width: 0, x: Number, y: Number };
   },
@@ -19,17 +19,19 @@ export default {
   },
   methods: {
     calcWidth() {
-      this.width = d3.max(this.vizualizationData) * 10;
+      this.width = 420;
     },
     DataVisualization() {
       this.x = d3
         .scaleLinear()
-        .domain([0, d3.max(this.vizualizationData)])
+        .domain([0, d3.max(this.data, d => Number(d.value))])
         .range([0, this.width]);
+
       this.y = d3
         .scaleBand()
-        .domain(d3.range(this.vizualizationData.length))
-        .range([0, 20 * this.vizualizationData.length]);
+        .domain(this.data.map(d => d.name))
+        .range([0, 20 * this.data.length]);
+
       const svg = d3
         .create("svg")
         .attr("width", this.width)
@@ -37,23 +39,23 @@ export default {
 
       const bar = svg
         .selectAll("g")
-        .data(this.vizualizationData)
+        .data(this.data)
         .join("g")
-        .attr("transform", (d, i) => `translate(0,${this.y(i)})`);
+        .attr("transform", d => `translate(0,${this.y(d.name)})`);
 
       bar
         .append("rect")
         .attr("fill", "steelblue")
-        .attr("width", this.x)
+        .attr("width", d => this.x(Number(d.value)))
         .attr("height", this.y.bandwidth() - 1);
 
       bar
         .append("text")
         .attr("fill", "white")
-        .attr("x", d => this.x(d) - 3)
+        .attr("x", d => this.x(Number(d.value)) - 3)
         .attr("y", this.y.bandwidth() / 2)
         .attr("dy", "0.35em")
-        .text(d => d);
+        .text(d => Number(d.value));
 
       return svg.node().innerHTML;
     }
@@ -61,7 +63,7 @@ export default {
   computed: {
     output() {
       console.log("output");
-      console.log("this.vizualizationData", this.vizualizationData);
+      // console.log("this.data", typeof(this.data[0].value));
       return this.DataVisualization();
     }
   }
