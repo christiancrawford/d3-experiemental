@@ -1,13 +1,22 @@
 <template>
-  <div id="app">
-    <router-link to="/">Hello World</router-link>
-    <router-link to="/barchart">Bar Chart</router-link>
+  <div id="app" class="container">
+    <aside class="menu">
+      <p class="menu-label">Charts</p>
+      <ul class="menu-list">
+        <li>
+          <router-link to="/">Hello World</router-link>
+        </li>
+        <li>
+          <router-link to="/barchart">Bar Chart</router-link>
+        </li>
+      </ul>
+    </aside>
     <router-view :data="loadData" />
   </div>
 </template>
 
 <script>
-import * as d3 from "d3";
+import { csv, autoType } from "d3";
 
 export default {
   name: "app",
@@ -24,7 +33,7 @@ export default {
   methods: {
     async fetchData() {
       let fileData;
-      await d3.csv("./alphabet.csv", d3.autoType).then(data => {
+      await csv("./alphabet.csv", autoType).then(data => {
         fileData = data;
       });
       this.loadData = fileData;
@@ -39,6 +48,5 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 60px;
 }
 </style>

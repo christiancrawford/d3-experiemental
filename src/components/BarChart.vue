@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <h1>Data Visualization using D3</h1>
+  <section>
+    <h1>Bar Chart using D3</h1>
     <svg :style="{ width: width, height: height }" v-html="output" />
-  </div>
+  </section>
 </template>
 
 <script>
@@ -90,6 +90,9 @@ export default {
 </script>
 
 <style>
+section {
+  text-align: center;
+}
 svg {
   font-size: 10px;
   text-anchor: end;
