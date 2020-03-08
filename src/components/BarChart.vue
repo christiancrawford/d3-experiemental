@@ -1,7 +1,15 @@
 <template>
-  <div>
-    <h1>Data Visualization using D3</h1>
-    <svg :style="{ width: width, height: height }" v-html="output" />
+  <div class="container">
+    <div class="card">
+      <header class="card-header">
+        <h1 class="card-header-title has-text-centered">Data Visualization using D3</h1>
+      </header>
+      <div class="card-content">
+        <div class="content">
+          <svg :style="{ width: width, height: height }" v-html="output" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -91,7 +99,9 @@ export default {
 
 <style>
 svg {
+  display: block;
   font-size: 10px;
   text-anchor: end;
+  margin: auto;
 }
 </style>
